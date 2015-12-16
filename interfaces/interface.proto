@@ -1,0 +1,232 @@
+package nui.stream;
+
+// Enable generation of Protocol Buffers RPC services.
+option cc_generic_services = false;
+option java_generic_services = false;
+option py_generic_services = false;
+option java_package = "de.dfki.av.nui";
+
+// The Leap Motion API measures physical quantities with the following units:
+
+// Distance:	millimeters
+// Time:	microseconds (unless otherwise noted)
+// Speed:	millimeters/second
+// Angle:	radians
+
+// Vector3f 3D
+message Vector3f {
+	required float x = 1;
+	required float y = 2;
+	required float z = 3;
+}
+// Vector3f 3D
+message Matrix4x4f {
+	required float x11 = 1;
+	required float y11 = 2;
+	required float z11 = 3;
+}
+
+message MyoFrame {
+	enum Side {
+		RIGHT   = 0;
+		LEFT    = 1;
+		NONE    = 2;
+	}
+	enum MyoPose {
+		UNKNOWN                = 0;
+		REST_GESTURE           = 1;
+		FIST_GESTURE           = 2;
+		WAVE_IN_GESTURE        = 3;
+		WAVE_OUT_GESTURE       = 4;
+		FINGERS_SPREAD_GESTURE = 5;
+		DOUBLE_TAB_GESTURE     = 6;
+	}
+	enum MyoState {
+		NOT_CONNECT            = 0;
+		CONNECTION_ESTABLISHED = 1;
+		CONNECTION_LOST        = 2;
+		BATTERY_STATUS_LOW     = 3;
+		CONNECTION_GOOD        = 4;
+		CONNECTION_POOR        = 5;
+	}
+	required int64 timestamp     = 1; // Timestamp of frame
+	required int32 id            = 2; // ID of frame
+	required MyoState state      = 3;
+    required bool onArm          = 4;
+	required Side whichArm       = 5;
+	required bool isUnlocked     = 6;
+	required uint32 batteryLevel = 7;
+	required int32 rssi          = 8;
+    required int32 roll          = 9; 
+    required int32 pitch         = 10; 
+    required int32 yaw           = 11;
+    required float acc_x         = 12;
+	required float acc_y         = 13;
+	required float acc_z         = 14;
+    required float gyro_x        = 15;
+	required float gyro_y        = 16;
+	required float gyro_z        = 17;
+	repeated int32 emgsamples    = 18 [packed=true];
+}
+
+// Finger Bone
+message Bone {
+	required float length = 1;
+	required float width = 2;
+	required Vector3f center = 3;
+	required Vector3f direction = 4;
+	enum BoneName {
+		METACARPAL = 0; // Bone connected to the wrist inside the palm
+		PROXIMAL = 1; // Bone connecting to the palm
+		INTERMEDIATE = 2; // Bone between the tip and the base
+		DISTAL = 3; // Bone at the tip of the finger
+	}
+
+	required BoneName name = 5 [default = METACARPAL];
+}
+
+// Finger 
+message Finger {
+	required float length = 1; // The length of the visible portion of the object (from where it extends out of the hand to the tip).
+	required float width = 2; // The average width of the visible portion of the object.
+	required Vector3f direction = 3; // A unit direction vector pointing in the same direction as the object (i.e. from base to tip).
+	required Vector3f tipPosition = 4; // The position of the tip in millimeters from the Leap origin.
+	required Vector3f tipVelocity = 5; // The speed of the tip in millimeters per second.
+	repeated Bone bones = 6;
+	enum FingerName {
+		THUMB = 0; // The thumb
+		INDEX = 1; // The index or fore-finger
+		MIDDLE = 2; // The middle finger
+		RING = 3; // The ring finger
+		PINKY = 4; // The pinky or little finger
+	}
+
+	required FingerName name = 7 [default = THUMB];
+}
+
+// Hand
+message Hand {
+	enum Side {
+		RIGHT = 0;
+		LEFT = 1;
+	}
+	required int32 id = 1;
+	required Vector3f palmPosition = 2; // The center of the palm measured in millimeters from the Leap origin.
+	required Vector3f palmVelocity = 3; // The speed of the palm in millimeters per second.
+	required Vector3f palmNormal = 4; // A vector perpendicular to the plane formed by the palm of the hand. The vector points downward out of the palm.
+	required Vector3f direction = 5; // A vector pointing from the center of the palm toward the fingers.
+	required Vector3f sphereCenter = 6; // The center of a sphere fit to the curvature of the hand (as if it were holding a ball).
+	required float sphereRadius = 7; // The radius of a sphere fit to the curvature of the hand. The radius changes with the shape of the hand.
+	required float confidence = 8; // How confident we are with a given hand pose. The confidence level ranges between 0.0 and 1.0 inclusive.
+	required float pinchStrength = 9;
+	required float grabStrength = 10;
+	required Side side = 11; // Right hand or left hand.
+	repeated Finger fingers = 12;
+}
+
+// Leap Frame
+message Frame {
+	required int64 timestamp = 1; // Timestamp of frame
+	repeated Hand hands = 2; // Hands in frame
+}
+
+// List of frames
+message FrameList {
+	repeated Frame frames = 1;
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Gesture
+message Gesture {
+// The possible gesture states.
+	enum GestureState {
+		STATE_INVALID = 0; // An invalid state
+		STATE_START = 1; //  The gesture is starting. Just enough has happened to recognize it.
+		STATE_UPDATE = 2; //  The gesture is in progress. (Note: not all gestures have updates).
+		STATE_STOP = 3; //  The gesture has completed or stopped.
+	}
+	// Handside
+	enum Side {
+		RIGHT = 0;
+		LEFT = 1;
+	}
+
+	required int32 id = 1;
+	required int64 timestamp = 2; // Timestamp of gesture occurrence
+	required string name = 3; // Name of gesture
+	optional float confidence = 4 [default = 1.0]; // Confidence of gesture recognition system
+	required GestureState state = 5 [default = STATE_INVALID];
+	required Side side = 6; // Right hand or left hand.
+	extensions 100 to 199;
+	// Swipe
+	extend Gesture {
+		optional Vector3f swipe_direction = 100;
+		optional float swipe_speed = 101;
+	}
+	// Tap
+	extend Gesture {
+		optional Vector3f tap_position = 110;
+		optional Vector3f tap_direction = 111;
+	}
+	// Circle
+	extend Gesture {
+		optional float circle_radius = 120;
+		optional float circle_progress = 121;
+		optional float circle_angle = 122;
+		optional bool circle_clockwise = 123;
+	}
+	// Pinch
+	extend Gesture {
+		optional float pinch_strength = 131;
+	}
+	// Grab
+	extend Gesture {
+		optional float grab_strength = 141;
+	}
+}
+
+// List of frames
+message GestureList {
+	repeated Gesture gestures = 1;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Attention area 
+message AttentionArea {
+	required string label = 1; // Label for this area
+	required Vector3f point = 2; // The point defining the area (bottom left corner when looking at the plane)
+	required Vector3f vector_top = 3; // vector pointing from mPoint to top left corner
+	required Vector3f vector_right = 4; // vector pointing from mPoint to bottom right corner
+	required Vector3f plane_normal = 5; // the normal of the plane (is calculated in constructor
+	required bool active = 6; // whether this target area is active
+	required float distance = 7; // Distance to area.
+	required float probability = 8; // Probability, that the user has his/her attention in this area.
+}
+
+// User attention event
+message UserAttention {
+	required int64 timestamp = 1;
+	repeated AttentionArea areas = 2;
+}
+
+// List of frames
+message AttentionList {
+	repeated UserAttention attentions = 1;
+}
+
+// List of myo frames
+message MyoList {
+	repeated MyoFrame frames = 1;
+}
+// User attention event
+message SystemMessage {
+	enum MessageType {
+		COMMAND = 1;
+		INFO = 2;
+		CONFIGURATION = 3;
+	};
+	required int32 id = 1;
+	required int64 timestamp = 2;
+	required MessageType type = 3;
+	required string category = 4;
+	required string message = 5;
+}
