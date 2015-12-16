@@ -1,0 +1,54 @@
+/*
+ * This file is part of the AV-NUI project.
+ * Copyright (C) 2012 DFKI GmbH. All rights reserved.
+ *
+ * Disclaimer:
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER AND
+ * CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ *
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+#pragma once
+#include "core/common.hpp"
+#include "core/NUIDLLexport.hpp"
+#include "eventmanager/Modality.hpp"
+
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "opencv2/highgui/highgui.hpp"
+/**
+ * \brief Interface for hand tracking of LEAP Motion device.
+ */
+class WEBCAM_EXPORT WebCamWrapper: public IModality {
+public:
+	WebCamWrapper() : IModality(WEBCAM_DEVICE, 10), p_capture(NULL) {
+		reconfigure();
+	};
+	virtual ~WebCamWrapper() {
+	};
+	/** ----------- IModality virtual function ------------- **/
+	virtual void
+	process(EventQueue&);
+	virtual void reconfigure();
+	virtual NUISTATUS initialize();
+	virtual NUISTATUS unInitialize();
+private:
+	/**
+	 * \brief Capturing device.
+	 */
+	cv::VideoCapture* p_capture;
+
+    /**
+     * \brief Second capturing device.
+     */
+    cv::VideoCapture* p_capture_2;
+};
