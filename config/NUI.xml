@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NUI_Config>
+	<Leap>
+		<Activated type="bool">false</Activated>
+		<Gestures>
+			<Circle type="bool">true</Circle>
+			<Swipe type="bool">true</Swipe>
+			<Keytap type="bool">false</Keytap>
+			<Screentap type="bool">true</Screentap>
+		</Gestures>
+		<Stream>
+			<raw type="bool">true</raw>
+		</Stream>
+	</Leap>
+	<Myo>
+		<Activated type="bool">true</Activated>
+		<Gestures>
+			<Rest type="bool">true</Rest>
+			<Fist type="bool">true</Fist>
+			<WaveIn type="bool">true</WaveIn>
+			<WaveOut type="bool">true</WaveOut>
+			<FingersSpread type="bool">true</FingersSpread>
+			<DoubleTab type="bool">true</DoubleTab>
+		</Gestures>
+		<Stream>
+			<raw type="bool">true</raw>
+		</Stream>
+	</Myo>
+	<WebCam>
+		<Activated type="bool">false</Activated>
+	</WebCam>
+	<Kinect>
+		<Activated type="bool">false</Activated>
+		<filter>
+			<Name type="string">passthrough</Name>
+			<MinDistance type="float">0.05</MinDistance>
+			<MaxDistance type="float">0.6</MaxDistance>
+		</filter>
+		<MinDistance type="float">0.05</MinDistance>
+		<MaxDistance type="float">0.6</MaxDistance>
+	</Kinect>
+	<PMDNano>
+		<Activated type="bool">false</Activated>
+		<filter>
+			<Name type="string">passthrough</Name>
+			<MinDistance type="float">0.05</MinDistance>
+			<MaxDistance type="float">0.6</MaxDistance>
+		</filter>
+		<MinDistance type="float">0.05</MinDistance>
+		<MaxDistance type="float">0.6</MaxDistance>
+	</PMDNano>
+	<RealSense>
+		<Activated type="bool">true</Activated>
+		<filter>
+			<Name type="string">average</Name>
+			<Windowsize type="float">5.0</Windowsize>
+		</filter>
+	</RealSense>
+	<DepthSense>
+		<Activated type="bool">false</Activated>
+		<filter>
+			<Windowsize type="float">5.0</Windowsize>
+		</filter>
+	</DepthSense>
+	<Gestures>
+		<Activated type="bool">true</Activated>
+		<Stream>
+			<raw type="bool">true</raw>
+		</Stream>
+	</Gestures>
+	<General>
+		<Dump>
+			<Activated type="bool">true</Activated>
+			<DumpDir type="string">C:\deep-breakfast\</DumpDir>
+			<PMDNano>
+				<DumpPointCloud type="bool">true</DumpPointCloud>
+				<DumpAmplitude type="bool">true</DumpAmplitude>
+				<DumpDepth type="bool">true</DumpDepth>
+			</PMDNano>
+			<Realsense>
+				<DumpPointCloud type="bool">true</DumpPointCloud>
+				<DumpColor type="bool">true</DumpColor>
+				<DumpDepth type="bool">true</DumpDepth>
+				<DumpIR type="bool">true</DumpIR>
+				<CacheFramerate type="int">5</CacheFramerate>
+			</Realsense>
+			<Depthsense>
+				<DumpPointCloud type="bool">false</DumpPointCloud>
+				<DumpColor type="bool">true</DumpColor>
+				<DumpDepth type="bool">true</DumpDepth>
+				<CacheFramerate type="int">5</CacheFramerate>
+			</Depthsense>
+			<WebCam>
+				<Dump type="bool">true</Dump>
+			</WebCam>
+			<Myo>
+				<Dump type="bool">true</Dump>
+			</Myo>
+			<Leap>
+				<Dump type="bool">false</Dump>
+			</Leap>
+		</Dump>
+		<Datalabels>
+			<lable>unknown</lable>
+			<lable>pouring</lable>
+			<lable>watering</lable>
+			<lable>holding object</lable>
+			<lable>writing</lable>
+			<lable>drinking</lable>
+		</Datalabels>
+		<AttentionAreas>
+			<lable>unknown</lable>
+		</AttentionAreas>
+		<Viz>
+			<Activated type="bool">false</Activated>
+			<PMDNano>
+				<ShowRAWPointCloud type="bool">false</ShowRAWPointCloud>
+				<ShowAmplitude type="bool">false</ShowAmplitude>
+				<ShowDepth type="bool">false</ShowDepth>
+				<ShowFilteredPointCloud type="bool">true</ShowFilteredPointCloud>
+			</PMDNano>
+			<RealSense>
+				<ShowRAWPointCloud type="bool">false</ShowRAWPointCloud>
+			</RealSense>
+			<WebCam>
+				<ShowRGB type="bool">true</ShowRGB>
+			</WebCam>
+		</Viz>
+	</General>
+	<Processing>
+		<HandGestureRecognition>
+			<Activated type="bool">false</Activated>
+		</HandGestureRecognition>
+		<ModelClassifier>
+			<Activated type="bool">true</Activated>
+		</ModelClassifier>
+	</Processing>
+	<Streaming>
+		<Activated type="bool">true</Activated>
+		<Port type="int">50111</Port>
+	</Streaming>
+	<Controller>
+		<Activated type="bool">true</Activated>
+		<Port type="int">50112</Port>
+	</Controller>
+</NUI_Config>
