@@ -1,6 +1,6 @@
 DESCRIPTION
 ===========
-`nui` is a command line tool to record raw data from several sensors that are connected to a computer. Prior to usage `nui` has to be configured via an XML-file. To start a recording simply run `recorder.exe`, e.g. by using a command line tool of your choice. 
+`nui` is a command line tool to record raw data from several sensors that are connected to a computer. Prior to usage `nui` has to be configured via an XML-file. To start a recording simply run `recorder.exe`, e.g. by using a command line tool of your choice. For setting up the system you can either use a pre-built package (TODO) or build it yourself from source.
 
 Sensors
 -------
