@@ -1,6 +1,21 @@
 DESCRIPTION
-==========
+===========
+`nui` is a command line tool to record raw data from several sensors that are connected to a computer. Prior to usage `nui` has to be configured via an XML-file. To start a recording simply run `recorder.exe`, e.g. by using a command line tool of your choice. 
 
+Sensors
+-------
+
+* Intel RealSense
+* Thalmic Labs Myo
+* SoftKinetic DepthSense
+
+...
+
+Configuration
+-------------
+The following options can be set via the XML configuration file:
+
+...
 
 
 BUILDING IN LINUX
@@ -28,7 +43,7 @@ Always choose **x64** version of a dependency!
 Environment Variables
 ---------------------
 
-*could be automated by script
+*could be automated by script*
 
 
 Targets
