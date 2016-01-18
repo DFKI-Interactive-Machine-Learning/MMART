@@ -14,6 +14,7 @@ Sensors
 Configuration
 -------------
 Several options can be set via the XML configuration file:
+
 * Devices that shall be used
 * Streams of that devices to record
 * Target path
