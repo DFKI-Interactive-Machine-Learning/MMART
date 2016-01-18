@@ -24,6 +24,7 @@ SETUP PRE-BUILT PACKAGE
 * Install RealSense SDK Runtime and F200 DCM (v1.4)
 * PCL 1.7.2 from http://unanancyowen.com/?p=1255&lang=en
 * HDF5-1.8.**15**
+* Install Myo Connect
 
 
 BUILDING IN LINUX
