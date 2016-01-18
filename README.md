@@ -17,6 +17,11 @@ The following options can be set via the XML configuration file:
 
 ...
 
+SETUP PRE-BUILT PACKAGE
+=======================
+
+* Install Visual C++ Redistributable Packages für Visual Studio 2013
+
 
 BUILDING IN LINUX
 =================
